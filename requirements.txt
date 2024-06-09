@@ -1,2 +1,4 @@
-neat-python
-pygame
+neat-python==0.92
+pygame @ file:///home/conda/feedstock_root/build_artifacts/pygame_1696017329873/work
+setuptools==70.0.0
+wheel==0.43.0
