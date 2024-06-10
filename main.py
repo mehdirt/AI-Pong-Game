@@ -146,7 +146,6 @@ def run_neat(config: neat.Config) -> None:
     """
  
     # p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-9') #* Use this line if you want to run from a specific checkpoint. Dont forget to comment the line below it.
-
     p = neat.Population(config)
     # Adding some reporters
     p.add_reporter(neat.StdOutReporter(True))
@@ -185,7 +184,7 @@ def main() -> None:
                          config_path)
     
     # Runing the Neat algorithm 
-    # run_neat(config) #! Note: This line must be commented if you just want to test your AI
+    run_neat(config) #! Note: This line must be commented if you just want to test your AI
 
     # Testing the AI
     test_best_ai(config) #* Note: You may want to comment this line if you just want to train your AI
