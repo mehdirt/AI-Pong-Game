@@ -26,13 +26,19 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-1. **Configuration:** Modify the settings in the config.txt file as needed. This file is based on the NEAT documentation and customized for this game. For more details on configuration, check the [NEAT documentation](https://neat-python.readthedocs.io/en/latest/config_file.html) about configuration file.
+1. **Configuration:** Modify the settings in the config.txt file as needed. This file is based on the NEAT documentation and customized for this game. For more details on configuration, check the [NEAT documentation](https://neat-python.readthedocs.io/en/latest/config_file.html) about the configuration file.
 
 2. **Main Actions:** There are two primary actions you can perform:
 
-- **Train the AI:** Use the `run_neat()` function. Ensure the `test_best_ai()` function is commented out.
-- **Test the AI:** Use the `test_best_ai()` function. Ensure the `run_neat()` function is commented out.
-3. **Starting from a Checkpoint:** If you have already passed some generations, you can start training from a specific checkpoint.
+- **Train the AI:** Add the `train` argument while running the `main.py`. If you'd like to train the model from a specific checkpoint, you can just add the checkpoint as the second argument. Use the commands below:
+```bash
+python main.py train
+python main.py train neat-checkpoint-9
+```
+- **Test the AI:** Just like before, Add the `test` argument while running the `main.py`.
+```bash
+python main.py test
+```
 
 ## Technologies Used
 - Python
