@@ -1,12 +1,14 @@
+import os
+from pong import Game
+from pong.game import GameInformation
+import pickle
+from sys import argv
+
 import neat
 import neat.config # Importing this type for annotaions
 import neat.genome # Importing this type for annotaions
 import neat.nn.feed_forward # Importing this type for annotaions
-import os
 import pygame
-from pong import Game
-from pong.game import GameInformation
-import pickle
 
 class PongGame:
     def __init__(self, window: pygame.Surface, width: int, height: int):
@@ -54,7 +56,7 @@ class PongGame:
             else: 
                 self.game.move_paddle(left=False, up=True)
             
-            game_info = self.game.loop()
+            self.game.loop()
             self.game.draw(draw_score=True, draw_hits=False)
             pygame.display.update()
 
@@ -139,14 +141,17 @@ def eval_genomes(genomes: list[tuple], config: neat.Config) -> None:
             break
 
 
-def run_neat(config: neat.Config) -> None:
+def run_neat(config: neat.Config, checkpoint=None) -> None:
     """
-    Runs the neat algorithm adjusting to
-    the given configuration, along with some reporters.
+    Runs the neat algorithm from the beginning or the given chekpoint,
+    adjusting to the given configuration, along with some reporters.
     """
- 
-    # p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-9') #* Use this line if you want to run from a specific checkpoint. Dont forget to comment the line below it.
-    p = neat.Population(config)
+    
+    # Check if any checkpoint has given 
+    if checkpoint:
+        p = neat.Checkpointer.restore_checkpoint(checkpoint) #* Run from a specific checkpoint.
+    else:
+        p = neat.Population(config)
     # Adding some reporters
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
@@ -156,6 +161,7 @@ def run_neat(config: neat.Config) -> None:
     winner = p.run(eval_genomes, 10) # Gives the best neural network
     with open("best.pickle", "wb") as f:
         pickle.dump(winner, f)
+
 
 def test_best_ai(config: neat.config):
     """Testing the the best genome which is stored on the 'best.pickle' file."""
@@ -172,6 +178,7 @@ def test_best_ai(config: neat.config):
     game = PongGame(window, width, height)
     game.test_ai(winner, config)
 
+
 def main() -> None:
     # Finding the file's path
     local_dir = os.path.dirname(__file__)
@@ -183,11 +190,27 @@ def main() -> None:
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_path)
     
-    # Runing the Neat algorithm 
-    run_neat(config) #! Note: This line must be commented if you just want to test your AI
+    try:
+        if argv[1].lower().strip() == 'train':
+            # Cheack if user passes second argument for training which must be a checkpoint
+            if len(argv) == 3:
+                checkpoint = argv[2]
+            else:
+                checkpoint = None 
 
-    # Testing the AI
-    test_best_ai(config) #* Note: You may want to comment this line if you just want to train your AI
+            # Runing the Neat algorithm
+            run_neat(config, checkpoint)
+        
+        elif argv[1].lower().strip() == 'test':
+            # Testing the AI
+            test_best_ai(config)
+        
+        else:
+            raise Exception("WrongCommand: You Need to Give 'train' or 'test' as the first argument.")
+    
+    except Exception as err:
+        print(err)
+
 
 if __name__ == "__main__":
     main()    
