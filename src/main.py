@@ -159,7 +159,7 @@ def run_neat(config: neat.Config, checkpoint=None) -> None:
     p.add_reporter(neat.Checkpointer(10))
 
     winner = p.run(eval_genomes, 10) # Gives the best neural network
-    with open("best.pickle", "wb") as f:
+    with open("utils/best.pickle", "wb") as f:
         pickle.dump(winner, f)
 
 
@@ -171,7 +171,7 @@ def test_best_ai(config: neat.config):
     window = pygame.display.set_mode((width, height))
 
     # Taking the best AI (genome) from our pickle file
-    with open("best.pickle", "rb") as f:
+    with open("utils/best.pickle", "rb") as f:
         winner = pickle.load(f)
     
     # Initializing a game
@@ -183,7 +183,7 @@ def main() -> None:
     # Finding the file's path
     local_dir = os.path.dirname(__file__)
     # Stroing the path of the config file
-    config_path = os.path.join(local_dir, "config.txt")
+    config_path = os.path.join(local_dir, "config/config.txt")
     
     # Passing different properties form the configuration file that we want to use
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,

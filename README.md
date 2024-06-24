@@ -1,6 +1,6 @@
 # AI Pong with NEAT
 
-![Project-logo](images/AI-Pong-Logo.jpg)
+![Project-logo](assets/images/AI-Pong-Logo.jpg)
 
 ## Description
 ### Overview
@@ -12,12 +12,12 @@ NEAT (NeuroEvolution of Augmenting Topologies) is a genetic algorithm designed t
 ### Training
 At the start of training, a neural network is created based on given configurations, forming a population of networks as the first generation. Each generation calculates the fitness value (number of times the ball hits the paddle) for each genome (neural network) by playing against all other genomes. The best genomes merge (crossover) to create new genomes for the next generation. This process continues until the fitness threshold or the maximum number of generations is reached. The best genome is saved using the Python pickle module.
 
-![Training-Video](images/pong-ai-training.gif)
+![Training-Video](assets/images/pong-ai-training.gif)
 
 ### Testing
 After training, the best genome is stored, and a human player can test their performance against this AI. This allows users to see how well the AI has learned to play Pong and have fun playing with it.
 
-![Testing-Video](images/pong-ai-testing.gif)
+![Testing-Video](assets/images/pong-ai-testing.gif)
 
 ## Installation
 To install the necessary packages, use the requirements.txt file:
